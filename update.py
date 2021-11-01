@@ -37,18 +37,20 @@ except IndexError:
 with zipfile.ZipFile(update_package, mode='r') as zf:
     zf.extractall(updatefolder)
 
-for p in updatefolder.joinpath('arcgis').iterdir():
-    if p.stem == '!Toolboxes':
-        copy_file(src=p,
-                  dst="C:/Program Files (x86)/ArcGIS/Desktop10.1/Tools",
-                  save_name='KT-Tools')
-    else:
-        copy_file(src=p,
-                  dst="C:/Python27/ArcGIS10.1/Lib/site-packages/ktima")
+if updatefolder.joinpath('arcgis').exists():
+    for p in updatefolder.joinpath('arcgis').iterdir():
+        if p.stem == '!Toolboxes':
+            copy_file(src=p,
+                      dst="C:/Program Files (x86)/ArcGIS/Desktop10.1/Tools",
+                      save_name='KT-Tools')
+        else:
+            copy_file(src=p,
+                      dst="C:/Python27/ArcGIS10.1/Lib/site-packages/ktima")
 
-copy_file(src=updatefolder.joinpath('ktima'),
-          dst=Path.home(),
-          save_name=f'.{appname}')
+if updatefolder.joinpath('ktima').exists():
+    copy_file(src=updatefolder.joinpath('ktima'),
+              dst=Path.home(),
+              save_name=f'.{appname}')
 
 log.success(f'\n{appname} was successfully updated to version {version}')
 sleep(5)
