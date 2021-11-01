@@ -34,8 +34,16 @@ try:
 except IndexError:
     version = 'unknown'
 
+password = f"{appname}-{version}"
+
+
+log.warning("\nThis might take some time. Do not close the console")
+log.highlight("Reading and extracting update package\n")
+
 with zipfile.ZipFile(update_package, mode='r') as zf:
-    zf.extractall(updatefolder)
+    zf.extractall(updatefolder, pwd=bytes(password, 'utf-8'))
+
+sleep(1)
 
 if updatefolder.joinpath('arcgis').exists():
     for p in updatefolder.joinpath('arcgis').iterdir():
