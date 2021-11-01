@@ -50,5 +50,5 @@ copy_file(src=updatefolder.joinpath('ktima'),
           dst=Path.home(),
           save_name=f'.{appname}')
 
-log.success(f'{appname} was successfully updated to version {version}')
-sleep(4)
+log.success(f'\n{appname} was successfully updated to version {version}')
+sleep(5)
