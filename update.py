@@ -36,9 +36,8 @@ except IndexError:
 
 password = f"{appname}-{version}"
 
-
-log.warning("\nThis might take some time. Do not close the console")
-log.highlight("Reading and extracting update package\n")
+log.highlight("\nReading and extracting update package")
+log.warning("This might take some time. Do not close the console\n")
 
 with zipfile.ZipFile(update_package, mode='r') as zf:
     zf.extractall(updatefolder, pwd=bytes(password, 'utf-8'))
@@ -53,7 +52,7 @@ if updatefolder.joinpath('arcgis').exists():
                           dst="C:/Program Files (x86)/ArcGIS/Desktop10.1/Tools",
                           save_name='KT-Tools')
             else:
-                log.warning("ArcGIS Toolboxes where not loaded")
+                log.warning("ArcGIS toolboxes where not loaded")
         else:
             if Path("C:/Python27/ArcGIS10.1/Lib/site-packages").exists():
                 copy_file(src=p,
@@ -65,6 +64,8 @@ if updatefolder.joinpath('ktima').exists():
     copy_file(src=updatefolder.joinpath('ktima'),
               dst=Path.home(),
               save_name=f'.{appname}')
+
+rmtree(updatefolder, ignore_errors=True)
 
 log.success(f'\n{appname} was successfully updated to version {version}')
 sleep(5)
