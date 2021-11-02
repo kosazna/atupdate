@@ -48,12 +48,18 @@ sleep(1)
 if updatefolder.joinpath('arcgis').exists():
     for p in updatefolder.joinpath('arcgis').iterdir():
         if p.stem == '!Toolboxes':
-            copy_file(src=p,
-                      dst="C:/Program Files (x86)/ArcGIS/Desktop10.1/Tools",
-                      save_name='KT-Tools')
+            if Path("C:/Program Files (x86)/ArcGIS/Desktop10.1/Tools/KT-Tools").exists():
+                copy_file(src=p,
+                          dst="C:/Program Files (x86)/ArcGIS/Desktop10.1/Tools",
+                          save_name='KT-Tools')
+            else:
+                log.warning("ArcGIS Toolboxes where not loaded")
         else:
-            copy_file(src=p,
-                      dst="C:/Python27/ArcGIS10.1/Lib/site-packages/ktima")
+            if Path("C:/Python27/ArcGIS10.1/Lib/site-packages").exists():
+                copy_file(src=p,
+                          dst="C:/Python27/ArcGIS10.1/Lib/site-packages/ktima")
+            else:
+                log.warning("ArcGIS scripts where not loaded")
 
 if updatefolder.joinpath('ktima').exists():
     copy_file(src=updatefolder.joinpath('ktima'),
