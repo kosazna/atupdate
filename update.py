@@ -43,7 +43,7 @@ log.highlight("Reading and extracting update package\n")
 with zipfile.ZipFile(update_package, mode='r') as zf:
     zf.extractall(updatefolder, pwd=bytes(password, 'utf-8'))
 
-sleep(1)
+sleep(2)
 
 if updatefolder.joinpath('arcgis').exists():
     for p in updatefolder.joinpath('arcgis').iterdir():
