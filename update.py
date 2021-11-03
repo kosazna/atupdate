@@ -36,8 +36,9 @@ except IndexError:
 
 password = f"{appname}-{version}"
 
-log.highlight("\nReading and extracting update package")
-log.warning("This might take some time. Do not close the console\n")
+log.warning("\nDo not close this windows until success message appears or window closes itself")
+log.warning("Reading and extracting update package. This might take some time...\n")
+
 
 with zipfile.ZipFile(update_package, mode='r') as zf:
     zf.extractall(updatefolder, pwd=bytes(password, 'utf-8'))
