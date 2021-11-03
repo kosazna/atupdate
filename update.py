@@ -12,7 +12,7 @@ from at.io.copyfuncs import copy_file
 
 my_parser = argparse.ArgumentParser()
 
-my_parser.add_argument('--appname', action='store', type=str, default='')
+my_parser.add_argument('--appname', action='store', type=str, default='ktima')
 my_parser.add_argument('--package', action='store', type=str, default='')
 
 args = my_parser.parse_args()
