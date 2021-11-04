@@ -9,6 +9,7 @@ from shutil import rmtree
 from at.input import FILE, input_path
 from at.logger import log
 from at.io.copyfuncs import copy_file
+from at.utils import make_shortcut
 
 my_parser = argparse.ArgumentParser()
 
@@ -62,7 +63,7 @@ if updatefolder.joinpath('arcgis').exists():
                           dst="C:/Python27/ArcGIS10.1/Lib/site-packages/ktima")
             else:
                 python_dir_exists = False
-    
+
     if not python_dir_exists:
         log.warning("ArcGIS scripts where not loaded")
 
@@ -72,6 +73,18 @@ if updatefolder.joinpath('ktima').exists():
               save_name=f'.{appname}')
 
 rmtree(updatefolder, ignore_errors=True)
+
+app_folder = Path.home().joinpath(f'.{appname}')
+
+if app_folder.joinpath('ktima.exe').exists():
+    make_shortcut(src=app_folder.joinpath('ktima.exe'),
+                  dst=Path.home().joinpath('Desktop'))
+
+if app_folder.joinpath('update.exe').exists():
+    make_shortcut(src=app_folder.joinpath('update.exe'),
+                  dst=Path.home().joinpath('Desktop'),
+                  shortcut_name='update ktima')
+
 
 log.success(f'\n{appname} was successfully updated to version {version}')
 sleep(5)
