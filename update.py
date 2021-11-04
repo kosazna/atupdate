@@ -36,7 +36,7 @@ except IndexError:
 
 password = f"{appname}-{version}"
 
-log.warning("\nDo not close this windows until success message appears or window closes itself")
+log.warning("\nDo not close this window until success message appears.")
 log.warning("Reading and extracting update package. This might take some time...\n")
 
 
@@ -44,6 +44,8 @@ with zipfile.ZipFile(update_package, mode='r') as zf:
     zf.extractall(updatefolder, pwd=bytes(password, 'utf-8'))
 
 sleep(2)
+
+python_dir_exists = True
 
 if updatefolder.joinpath('arcgis').exists():
     for p in updatefolder.joinpath('arcgis').iterdir():
@@ -59,7 +61,10 @@ if updatefolder.joinpath('arcgis').exists():
                 copy_file(src=p,
                           dst="C:/Python27/ArcGIS10.1/Lib/site-packages/ktima")
             else:
-                log.warning("ArcGIS scripts where not loaded")
+                python_dir_exists = False
+    
+    if not python_dir_exists:
+        log.warning("ArcGIS scripts where not loaded")
 
 if updatefolder.joinpath('ktima').exists():
     copy_file(src=updatefolder.joinpath('ktima'),
