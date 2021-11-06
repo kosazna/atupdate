@@ -57,7 +57,7 @@ if updatefolder.joinpath('arcgis').exists():
     for p in updatefolder.joinpath('arcgis').iterdir():
         if p.stem == '!Toolboxes':
             if Path("C:/Program Files (x86)/ArcGIS/Desktop10.1").exists():
-                _dst = Path.home().joinpath(f'.ArcGIS')
+                _dst = Path.home().joinpath(f'.ktima-ArcGIS')
                 copy_file(src=p,
                           dst=_dst)
             else:
@@ -65,7 +65,8 @@ if updatefolder.joinpath('arcgis').exists():
         else:
             if Path("C:/Python27/ArcGIS10.1/Lib/site-packages").exists():
                 copy_file(src=p,
-                          dst="C:/Python27/ArcGIS10.1/Lib/site-packages/ktima")
+                          dst="C:/Python27/ArcGIS10.1/Lib/site-packages/ktima",
+                          save_name=p.stem)
             else:
                 python_dir_exists = False
 
