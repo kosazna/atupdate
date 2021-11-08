@@ -48,11 +48,6 @@ sleep(2)
 
 python_dir_exists = True
 
-if updatefolder.joinpath('ktima').exists():
-    copy_file(src=updatefolder.joinpath('ktima'),
-              dst=Path.home(),
-              save_name=f'.{appname}')
-
 if updatefolder.joinpath('arcgis').exists():
     for p in updatefolder.joinpath('arcgis').iterdir():
         if p.stem == '!Toolboxes':
@@ -72,6 +67,12 @@ if updatefolder.joinpath('arcgis').exists():
 
     if not python_dir_exists:
         log.warning("ArcGIS scripts where not loaded")
+
+if updatefolder.joinpath('ktima').exists():
+    copy_file(src=updatefolder.joinpath('ktima'),
+              dst=Path.home(),
+              save_name=f'.{appname}',
+              ignore=['update.exe'])
 
 
 rmtree(updatefolder, ignore_errors=True)
