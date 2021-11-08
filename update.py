@@ -69,10 +69,15 @@ if updatefolder.joinpath('arcgis').exists():
         log.warning("ArcGIS scripts where not loaded")
 
 if updatefolder.joinpath('ktima').exists():
-    copy_file(src=updatefolder.joinpath('ktima'),
-              dst=Path.home(),
-              save_name=f'.{appname}',
-              ignore=['update.exe'])
+    if Path.home().joinpath(f'.{appname}').exists():
+        copy_file(src=updatefolder.joinpath('ktima'),
+                  dst=Path.home(),
+                  save_name=f'.{appname}',
+                  ignore=['update.exe'])
+    else:
+        copy_file(src=updatefolder.joinpath('ktima'),
+                  dst=Path.home(),
+                  save_name=f'.{appname}')
 
 
 rmtree(updatefolder, ignore_errors=True)
