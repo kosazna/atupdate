@@ -24,6 +24,7 @@ update_package = args.package
 while not appname:
     appname = input("\nProvide appname:\n")
 
+app_folder = Path.home().joinpath(f'.{appname}')
 updatefolder = Path(os.environ.get('APPDATA')).joinpath(f".{appname}/.update")
 rmtree(updatefolder, ignore_errors=True)
 
@@ -69,7 +70,7 @@ if updatefolder.joinpath('arcgis').exists():
         log.warning("ArcGIS scripts where not loaded")
 
 if updatefolder.joinpath('ktima').exists():
-    if Path.home().joinpath(f'.{appname}').exists():
+    if app_folder.exists():
         copy_file(src=updatefolder.joinpath('ktima'),
                   dst=Path.home(),
                   save_name=f'.{appname}',
@@ -79,10 +80,7 @@ if updatefolder.joinpath('ktima').exists():
                   dst=Path.home(),
                   save_name=f'.{appname}')
 
-
 rmtree(updatefolder, ignore_errors=True)
-
-app_folder = Path.home().joinpath(f'.{appname}')
 
 if app_folder.joinpath('ktima.exe').exists():
     make_shortcut(src=app_folder.joinpath('ktima.exe'),
