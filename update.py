@@ -30,7 +30,7 @@ temp_app = updatefolder.joinpath('app')
 temp_arcgis = updatefolder.joinpath('arcgis')
 desktop = Path.home().joinpath('Desktop')
 app_exe = app_folder.joinpath(f'source/{appname}/{appname}.exe')
-update_exe = app_folder.joinpath(f'source/{appname}/{appname}.exe')
+update_exe = app_folder.joinpath(f'source/update/update.exe')
 
 rmtree(updatefolder, ignore_errors=True)
 
