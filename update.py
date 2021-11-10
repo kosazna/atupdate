@@ -73,7 +73,7 @@ if temp_arcgis.exists():
         log.warning("ArcGIS scripts where not loaded")
 
 if temp_app.exists():
-    if app_folder.exists():
+    if update_exe.exists():
         copy_file(src=temp_app,
                   dst=Path.home(),
                   save_name=f'.{appname}',
