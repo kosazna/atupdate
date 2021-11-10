@@ -26,6 +26,12 @@ while not appname:
 
 app_folder = Path.home().joinpath(f'.{appname}')
 updatefolder = Path(os.environ.get('APPDATA')).joinpath(f".{appname}/.update")
+temp_app = updatefolder.joinpath('app')
+temp_arcgis = updatefolder.joinpath('arcgis')
+desktop = Path.home().joinpath('Desktop')
+app_exe = app_folder.joinpath(f'source/{appname}/{appname}.exe')
+update_exe = app_folder.joinpath(f'source/{appname}/{appname}.exe')
+
 rmtree(updatefolder, ignore_errors=True)
 
 while not update_package:
@@ -42,12 +48,12 @@ log.warning("Reading and extracting update package. This might take some time...
 with zipfile.ZipFile(update_package, mode='r') as zf:
     zf.extractall(updatefolder)
 
-sleep(2)
+sleep(4)
 
 python_dir_exists = True
 
-if updatefolder.joinpath('arcgis').exists():
-    for p in updatefolder.joinpath('arcgis').iterdir():
+if temp_arcgis.exists():
+    for p in temp_arcgis.iterdir():
         if p.stem == '!Toolboxes':
             if Path("C:/Program Files (x86)/ArcGIS/Desktop10.1").exists():
                 _dst = Path.home().joinpath(f'.ktima-ArcGIS')
@@ -66,31 +72,27 @@ if updatefolder.joinpath('arcgis').exists():
     if not python_dir_exists:
         log.warning("ArcGIS scripts where not loaded")
 
-if updatefolder.joinpath('app').exists():
+if temp_app.exists():
     if app_folder.exists():
-        copy_file(src=updatefolder.joinpath(f'{appname}'),
+        copy_file(src=temp_app,
                   dst=Path.home(),
                   save_name=f'.{appname}',
                   ignore=['update'])
     else:
-        copy_file(src=updatefolder.joinpath(f'{appname}'),
+        copy_file(src=temp_app,
                   dst=Path.home(),
                   save_name=f'.{appname}')
 
 rmtree(updatefolder, ignore_errors=True)
 
-app_exe = app_folder.joinpath(f'source/{appname}/{appname}.exe')
-update_exe = app_folder.joinpath(f'source/{appname}/{appname}.exe')
-
 if app_exe.exists():
-    make_shortcut(src=app_exe,
-                  dst=Path.home().joinpath('Desktop'))
+    make_shortcut(src=app_exe, dst=desktop)
 
 if update_exe.exists():
     make_shortcut(src=update_exe,
-                  dst=Path.home().joinpath('Desktop'),
+                  dst=desktop,
                   shortcut_name=f'update {appname}')
 
 
 log.success(f'\n{appname} was successfully updated to version {version}')
-sleep(5)
+sleep(4)
