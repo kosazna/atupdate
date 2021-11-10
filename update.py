@@ -36,14 +36,11 @@ try:
 except IndexError:
     version = 'unknown'
 
-password = f"{appname}-{version}"
-
 log.warning("\nDo not close this window until success message appears.")
 log.warning("Reading and extracting update package. This might take some time...\n")
 
-
 with zipfile.ZipFile(update_package, mode='r') as zf:
-    zf.extractall(updatefolder, pwd=bytes(password, 'utf-8'))
+    zf.extractall(updatefolder)
 
 sleep(2)
 
@@ -74,7 +71,7 @@ if updatefolder.joinpath('ktima').exists():
         copy_file(src=updatefolder.joinpath('ktima'),
                   dst=Path.home(),
                   save_name=f'.{appname}',
-                  ignore=['update.exe'])
+                  ignore=['update'])
     else:
         copy_file(src=updatefolder.joinpath('ktima'),
                   dst=Path.home(),
@@ -82,12 +79,12 @@ if updatefolder.joinpath('ktima').exists():
 
 rmtree(updatefolder, ignore_errors=True)
 
-if app_folder.joinpath('ktima.exe').exists():
-    make_shortcut(src=app_folder.joinpath('ktima.exe'),
+if app_folder.joinpath('source/ktima/ktima.exe').exists():
+    make_shortcut(src=app_folder.joinpath('source/ktima/ktima.exe'),
                   dst=Path.home().joinpath('Desktop'))
 
-if app_folder.joinpath('update.exe').exists():
-    make_shortcut(src=app_folder.joinpath('update.exe'),
+if app_folder.joinpath('source/update/update.exe').exists():
+    make_shortcut(src=app_folder.joinpath('source/update/update.exe'),
                   dst=Path.home().joinpath('Desktop'),
                   shortcut_name='update ktima')
 
