@@ -43,7 +43,7 @@ except IndexError:
     version = 'unknown'
 
 log.warning("\nDo not close this window until success message appears.")
-log.warning("Reading and extracting update package. This might take some time...\n")
+log.warning("Reading and extracting update package...\n")
 
 with zipfile.ZipFile(update_package, mode='r') as zf:
     zf.extractall(updatefolder)
