@@ -66,27 +66,30 @@ if updatefolder.joinpath('arcgis').exists():
     if not python_dir_exists:
         log.warning("ArcGIS scripts where not loaded")
 
-if updatefolder.joinpath('ktima').exists():
+if updatefolder.joinpath('app').exists():
     if app_folder.exists():
-        copy_file(src=updatefolder.joinpath('ktima'),
+        copy_file(src=updatefolder.joinpath(f'{appname}'),
                   dst=Path.home(),
                   save_name=f'.{appname}',
                   ignore=['update'])
     else:
-        copy_file(src=updatefolder.joinpath('ktima'),
+        copy_file(src=updatefolder.joinpath(f'{appname}'),
                   dst=Path.home(),
                   save_name=f'.{appname}')
 
 rmtree(updatefolder, ignore_errors=True)
 
-if app_folder.joinpath('source/ktima/ktima.exe').exists():
-    make_shortcut(src=app_folder.joinpath('source/ktima/ktima.exe'),
+app_exe = app_folder.joinpath(f'source/{appname}/{appname}.exe')
+update_exe = app_folder.joinpath(f'source/{appname}/{appname}.exe')
+
+if app_exe.exists():
+    make_shortcut(src=app_exe,
                   dst=Path.home().joinpath('Desktop'))
 
-if app_folder.joinpath('source/update/update.exe').exists():
-    make_shortcut(src=app_folder.joinpath('source/update/update.exe'),
+if update_exe.exists():
+    make_shortcut(src=update_exe,
                   dst=Path.home().joinpath('Desktop'),
-                  shortcut_name='update ktima')
+                  shortcut_name=f'update {appname}')
 
 
 log.success(f'\n{appname} was successfully updated to version {version}')
