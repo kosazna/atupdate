@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 import argparse
+import os
 import zipfile
 from pathlib import Path
-from time import sleep
-import os
 from shutil import rmtree
+from time import sleep
 
 from at.input import FILE, input_path
-from at.logger import log
 from at.io.copyfuncs import copy_file
+from at.logger import log
 from at.utils import make_shortcut
 
 my_parser = argparse.ArgumentParser()
