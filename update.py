@@ -11,15 +11,19 @@ from at.io.copyfuncs import copy_file
 from at.logger import log
 from at.utils import make_shortcut
 
+log.highlight("Update tool version 2")
+
 my_parser = argparse.ArgumentParser()
 
 my_parser.add_argument('--appname', action='store', type=str, default='')
 my_parser.add_argument('--package', action='store', type=str, default='')
+my_parser.add_argument('--updateself', action='store', type=int, default=0)
 
 args = my_parser.parse_args()
 
 appname = args.appname
 update_package = args.package
+update_self = bool(args.updateself)
 
 while not update_package:
     update_package = input_path("\nProvide update package file [.zip]:\n",
@@ -80,7 +84,7 @@ if temp_arcgis.exists():
         log.warning("ArcGIS scripts where not loaded")
 
 if temp_app.exists():
-    if update_exe.exists():
+    if update_exe.exists() and not update_self:
         copy_file(src=temp_app,
                   dst=Path.home(),
                   save_name=f'.{appname}',
