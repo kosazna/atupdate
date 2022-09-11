@@ -13,13 +13,28 @@ from at.utils import make_shortcut
 
 my_parser = argparse.ArgumentParser()
 
-my_parser.add_argument('--appname', action='store', type=str, default='ktima')
+my_parser.add_argument('--appname', action='store', type=str, default='')
 my_parser.add_argument('--package', action='store', type=str, default='')
 
 args = my_parser.parse_args()
 
 appname = args.appname
 update_package = args.package
+
+while not update_package:
+    update_package = input_path("\nProvide update package file [.zip]:\n",
+                                ensure=FILE)
+
+try:
+    version = update_package.split('_')[-1].strip('.zip')
+except IndexError:
+    version = 'unknown'
+
+if not appname:
+    try:
+        appname = update_package.split('_')[-2]
+    except IndexError:
+        appname = ''
 
 while not appname:
     appname = input("\nProvide appname:\n")
@@ -33,14 +48,6 @@ app_exe = app_folder.joinpath(f'source/{appname}/{appname}.exe')
 update_exe = app_folder.joinpath(f'source/update/update.exe')
 
 rmtree(updatefolder, ignore_errors=True)
-
-while not update_package:
-    update_package = input_path("\nProvide update package file [.zip]:\n",
-                                ensure=FILE)
-try:
-    version = update_package.split('_')[-1].strip('.zip')
-except IndexError:
-    version = 'unknown'
 
 log.warning("\nDo not close this window until success message appears.")
 log.warning("Reading and extracting update package...\n")
