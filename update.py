@@ -11,7 +11,7 @@ from at.io.copyfuncs import copy_file
 from at.logger import log
 from at.utils import make_shortcut
 
-log.highlight("Update tool version 2")
+log.highlight("Software manager v2.1")
 
 my_parser = argparse.ArgumentParser()
 
@@ -102,7 +102,7 @@ if app_exe.exists():
 if update_exe.exists():
     make_shortcut(src=update_exe,
                   dst=desktop,
-                  shortcut_name=f'update {appname}')
+                  shortcut_name=f'Software Manager')
 
 
 log.success(f'\n{appname} was successfully updated to version {version}')
